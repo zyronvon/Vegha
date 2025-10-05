@@ -525,65 +525,48 @@
       id="loader"
       class="fixed inset-0 bg-black flex flex-col items-center justify-center scale-100 opacity-100 z-50"
     >
-      <!-- Bottom-Left Number Counter Area -->
       <div class="absolute bottom-10 left-10 text-white flex select-none">
         <div id="counter-display" class="flex text-7xl md:text-8xl">
-          <!-- Digit Roller for the tens place -->
           <div
             id="digit-0"
-            class="inline-block overflow-hidden font-mono align-top digit-container"
+            class="inline-block overflow-hidden align-top digit-container"
           >
             <div class="digit-roller">
-              <span class="block w-full text-center">0</span
-              ><span class="block w-full text-center">1</span
-              ><span class="block w-full text-center">2</span
-              ><span class="block w-full text-center">3</span
-              ><span class="block w-full text-center">4</span
-              ><span class="block w-full text-center">5</span
-              ><span class="block w-full text-center">6</span
-              ><span class="block w-full text-center">7</span
-              ><span class="block w-full text-center">8</span
-              ><span class="block w-full text-center">9</span>
+              <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span
+              ><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
             </div>
           </div>
-          <!-- Digit Roller for the ones place -->
           <div
             id="digit-1"
-            class="inline-block overflow-hidden font-mono align-top digit-container"
+            class="inline-block overflow-hidden align-top digit-container"
           >
             <div class="digit-roller">
-              <span class="block w-full text-center">0</span
-              ><span class="block w-full text-center">1</span
-              ><span class="block w-full text-center">2</span
-              ><span class="block w-full text-center">3</span
-              ><span class="block w-full text-center">4</span
-              ><span class="block w-full text-center">5</span
-              ><span class="block w-full text-center">6</span
-              ><span class="block w-full text-center">7</span
-              ><span class="block w-full text-center">8</span
-              ><span class="block w-full text-center">9</span>
+              <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span
+              ><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+            </div>
+          </div>
+          <div
+            id="digit-2"
+            class="inline-block overflow-hidden align-top digit-container"
+          >
+            <div class="digit-roller">
+              <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span
+              ><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Centered Progress Bar Area -->
       <div class="w-1/2 max-w-lg">
         <div class="h-4 bg-gray-700 rounded-full overflow-hidden shadow-2xl">
           <div
             id="progress-bar"
             class="h-full bg-white transition-all duration-300 ease-out rounded-full"
-            style="width: 1%"
+            style="width: 0%"
           ></div>
         </div>
       </div>
     </div>
-
-    <!-- 2. Your custom website content goes HERE. 
-         It will be hidden until the loader (above) is finished.
-         Since the body background is black, the screen will be black initially.
-         You should add your main layout/content below this line. 
-    -->
 
     <main id="main-content">
       <section id="homepage">
@@ -1023,15 +1006,15 @@
                 );
                 gradient.addColorStop(
                   0,
-                  rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})
+                  `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`
                 );
                 gradient.addColorStop(
                   0.5,
-                  rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 0.5})
+                  `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 0.5})`
                 );
                 gradient.addColorStop(
                   1,
-                  rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)
+                  `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`
                 );
                 ctx.fillStyle = gradient;
                 ctx.beginPath();
@@ -1103,6 +1086,7 @@
 
       // --- ALL OTHER PAGE SCRIPTS ---
       document.addEventListener("DOMContentLoaded", () => {
+        
         // --- LOADER LOGIC ---
         const loader = document.getElementById("loader");
         const progressBar = document.getElementById("progress-bar");
@@ -1120,7 +1104,7 @@
           digits.forEach((digit, index) => {
             if (digitRollers[index]) {
               const yOffset = digit * 1;
-              digitRollers[index].style.transform = translateY(-${yOffset}em);
+              digitRollers[index].style.transform = `translateY(-${yOffset}em)`;
             }
           });
         };
@@ -1137,13 +1121,13 @@
 
         let progress = 0;
         const totalDuration = 2000;
-        const intervalTime = totalDuration / 101;
+        const intervalTime = totalDuration / 101; // 101 steps for 0-100
 
         updateCounter(0); // Set initial state to 000
 
         const interval = setInterval(() => {
           progress++;
-          progressBar.style.width = ${progress}%;
+          progressBar.style.width = `${progress}%`;
           updateCounter(progress);
 
           if (progress >= 100) {
@@ -1244,7 +1228,7 @@
             if (currentTween) currentTween.kill();
             tabButtons.forEach((btn) => gsap.set(btn, { "--progress": "0%" }));
             const newActiveTabElement = document.querySelector(
-              [data-tab="${newTabId}"]
+              `[data-tab="${newTabId}"]`
             );
             contentPanes.forEach((pane) => {
               const isNewActivePane = pane.dataset.content === newTabId;
@@ -1290,7 +1274,7 @@
             });
           });
           const initialTabId = tabOrder[0];
-          gsap.set(document.querySelector([data-content="${initialTabId}"]), {
+          gsap.set(document.querySelector(`[data-content="${initialTabId}"]`), {
             autoAlpha: 1,
             y: 0,
           });
